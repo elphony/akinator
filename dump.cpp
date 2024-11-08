@@ -13,6 +13,7 @@ void create_dump(Tree* tree, const char* file, int line, const char* func) {
     create_node(tree->root, dump);
 
     fprintf(dump, "}\n");
+
     fclose(dump);
     
     char command[MAX_SIZE_OF_COMMAND] = {};
@@ -38,7 +39,7 @@ void create_html() {
 
 void create_node(Node* node, FILE* dump) {
 
-    fprintf(dump, "\tnode%p[shape = Mrecord, style = \"rounded, filled\", fillcolor = \"lightpink\", label = \"{data: %d | { left: %p | right: %p }}\"]\n", node, node->data, node->left, node->right);
+    fprintf(dump, "\tnode%p[shape = Mrecord, style = \"rounded, filled\", fillcolor = \"lightpink\", label = \"{hui: %d | { pizda: %p | skovoroda: %p }}\"]\n", node, node->data, node->left, node->right);
     if (node->left) {
         fprintf(dump, "\tnode%p -> node%p\n", node, node->left);
         create_node(node->left, dump);

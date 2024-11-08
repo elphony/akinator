@@ -1,5 +1,5 @@
-#ifndef DUMP_H
-#define DUMP_H
+#ifndef DUMP_HUI
+#define DUMP_HUI
 
 #include <stdio.h>
 #include "tree.h"
@@ -16,4 +16,4 @@ void create_html();
 
 void create_node(Node* node, FILE* dump);
 
-#endif // DUMP_H
+#endif // DUMP_HUI
