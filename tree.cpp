@@ -17,7 +17,7 @@ Tree* tree_ctor(TreeElem_t data) {
     // проверка выделенной памяти
     my_tree->root = node_ctor(data);
     my_tree->size = 0;
-    TREE_DUMP(my_tree);
+    TREE_DUMP(my_tree, my_tree->root);
     return my_tree;
 }
 
@@ -41,7 +41,7 @@ void insert_elem(Tree* tree, Node* node, TreeElem_t data) {
         if (!node->left) {
             node->left = node_ctor(data);
             tree->size++;
-            TREE_DUMP(tree);
+            TREE_DUMP(tree, node->left);
             return;
         }
         else {
@@ -52,7 +52,7 @@ void insert_elem(Tree* tree, Node* node, TreeElem_t data) {
         if (!node->right) {
             node->right = node_ctor(data);
             tree->size++;
-            TREE_DUMP(tree);
+            TREE_DUMP(tree, node->right);
             return;
         }
         else {
