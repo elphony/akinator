@@ -5,16 +5,10 @@
 #include "dump.h"
 
 int main() {
-    Tree* my_tree = tree_ctor(50);
-
-    insert_elem(my_tree, my_tree->root, 40);
-    insert_elem(my_tree, my_tree->root, 30);
-    insert_elem(my_tree, my_tree->root, 60);
-    insert_elem(my_tree, my_tree->root, 10);
-    insert_elem(my_tree, my_tree->root, 5);
-    insert_elem(my_tree, my_tree->root, 70);
-    insert_elem(my_tree, my_tree->root, 55);
-    insert_elem(my_tree, my_tree->root, 45);
+    
+    FILE* file = fopen("tree.txt", "r");
+    Tree* my_tree = tree_from_file(file);
+    TREE_DUMP(my_tree, my_tree->root);
 
     create_html();
 

@@ -9,6 +9,8 @@ void create_dump(Tree* tree, Node* node, const char* file, int line, const char*
 
     fprintf(dump, "digraph tree {\n");
     fprintf(dump, "\tsplines = ortho\n");
+    fprintf(dump, "\theader [shape = Mrecord, style = \"filled\", label = \"tree dump from file %s | function %s | line %d\"" 
+                    "fillcolor = \"white\", color = \"white\"]",                                file,         func,     line);
 
     create_node(tree->root, dump);
 
@@ -42,15 +44,15 @@ void create_html() {
 void create_node(Node* node, FILE* dump) {
 
     fprintf(dump, "\tnode%p[shape = Mrecord, style = \"rounded, filled\","
-                    "fillcolor = \"lightpink\", label = \"{hui: %d | { pizda: %p | skovoroda: %p }}\"]\n", 
+                    "fillcolor = \"lightpink\", label = \"{%s | { %p | %p }}\"]\n", 
                          node,                                  node->data,   node->left,     node->right);
 
     if (node->left) {
-        fprintf(dump, "\tnode%p -> node%p\n", node, node->left);
+        fprintf(dump, "\tnode%p -> node%p\n [xlabel = \"Нет\"]", node, node->left);
         create_node(node->left, dump);
     }
     if (node->right) {
-        fprintf(dump, "\tnode%p -> node%p\n", node, node->right);
+        fprintf(dump, "\tnode%p -> node%p [xlabel = \"Да\"]\n", node, node->right);
         create_node(node->right, dump);
     }
 }
