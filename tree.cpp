@@ -139,23 +139,32 @@ void insert_elem(Tree* tree, Node* node, TreeElem_t data, compare_func comparato
     }
 }
 
-int find_tree_elem(Node* node, TreeElem_t value) {
+int find_tree_elem(Node* node, TreeElem_t value, char** path, int* logic_path) {
 
+    *path = node->data;
+    path++;
     if (strcasecmp(node->data, value) == 0) {
         return 1;
     }
 
+    *logic_path = -1; 
+    logic_path++;
     if (node->left) {
-        if (find_tree_elem(node->left, value)) {
+        if (find_tree_elem(node->left, value, path, logic_path)) {
             return 1;
         }
     }
+    logic_path--;
 
+    *logic_path = 1; 
+    logic_path++;
     if (node->right) {
-        if (find_tree_elem(node->right, value)) {
+        if (find_tree_elem(node->right, value, path, logic_path)) {
             return 1;
         }
     }
+    logic_path--;
 
+    path--;
     return 0;
 }

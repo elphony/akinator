@@ -51,11 +51,11 @@ void create_node(Node* node, FILE* dump) {
                          node,                                  node->data,   node->left,     node->right);
 
     if (node->left) {
-        fprintf(dump, "\tnode%p -> node%p [xlabel = \"Нет\"]\n", node, node->left);
+        fprintf(dump, "\tnode%p -> node%p [xlabel = \"No\"]\n", node, node->left);
         create_node(node->left, dump);
     }
     if (node->right) {
-        fprintf(dump, "\tnode%p -> node%p [xlabel = \"Да\"]\n", node, node->right);
+        fprintf(dump, "\tnode%p -> node%p [xlabel = \"Yes\"]\n", node, node->right);
         create_node(node->right, dump);
     }
 }
