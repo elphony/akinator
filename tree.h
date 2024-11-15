@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 
+typedef int (*compare_func)(char* str1, char* str2);
+
 typedef char* TreeElem_t;
 
 const size_t MAX_DATA_SIZE = 100;
@@ -26,14 +28,16 @@ void node_dtor(Node* node);
 
 void tree_dtor(Tree* tree);
 
-void insert_elem(Tree* tree, Node* node, TreeElem_t data);
+void insert_elem(Tree* tree, Node* node, TreeElem_t data, compare_func comparator);
 
-char* read_node_data(FILE* text);
+TreeElem_t read_node_data(FILE* text);
 
 Node* read_node(FILE* text);
 
-Tree* tree_from_file(FILE* text);
+Tree* tree_from_file(const char* name_file);
 
 size_t count_node();
+
+int find_tree_elem(Node* node, TreeElem_t value);
 
 #endif // TREE_H

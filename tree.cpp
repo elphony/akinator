@@ -11,11 +11,18 @@ size_t count_node() {
     return num;
 }
 
-Tree* tree_from_file(FILE* text) {
+Tree* tree_from_file(const char* name_file) {
+    
+    FILE* text = fopen(name_file, "r");
+
     Tree* my_tree = {};
     my_tree = (Tree*)calloc(1, sizeof(Tree));
+
     my_tree->root = read_node(text);
     my_tree->size = count_node() - 1;
+
+    fclose(text);
+
     return my_tree;
 }
 
@@ -35,7 +42,7 @@ Node* read_node(FILE* text) {
         return NULL; 
     }
 
-    char* node_data = read_node_data(text);
+    TreeElem_t node_data = read_node_data(text);
 
     Node* node = node_ctor(node_data);
     count_node();
@@ -53,9 +60,9 @@ Node* read_node(FILE* text) {
     return node; 
 }
 
-char* read_node_data(FILE* text) {
+TreeElem_t read_node_data(FILE* text) {
 
-    int symbol = getc(text);
+    int symbol = fgetc(text);
     
     while (isspace(symbol)){
         symbol = fgetc(text);
@@ -65,9 +72,7 @@ char* read_node_data(FILE* text) {
         fprintf(stderr, "%s: unknown symbol %c\n", __func__, symbol);
     }
 
-    char* node_data = (char*)calloc(1, MAX_DATA_SIZE * sizeof(char));
-
-    //fscanf(text, "%s", node_data); 
+    TreeElem_t node_data = (TreeElem_t)calloc(1, MAX_DATA_SIZE * sizeof(TreeElem_t));
 
     fscanf(text, "%[^\"]", node_data);
 
@@ -90,7 +95,6 @@ Tree* tree_ctor(TreeElem_t data) {
     // проверка выделенной памяти
     my_tree->root = node_ctor(data);
     my_tree->size = 0;
-    TREE_DUMP(my_tree, my_tree->root);
     return my_tree;
 }
 
@@ -110,28 +114,48 @@ void tree_dtor(Tree* tree) {
     free(tree);
 }
 
-void insert_elem(Tree* tree, Node* node, TreeElem_t data) {
 
-    if (node->data > data) {
+void insert_elem(Tree* tree, Node* node, TreeElem_t data, compare_func comparator) {
+
+    if (comparator(node->data, data) < 0) {
         if (!node->left) {
             node->left = node_ctor(data);
             tree->size++;
-            TREE_DUMP(tree, node->left);
             return;
         }
         else {
-            insert_elem(tree, node->left, data);
+            insert_elem(tree, node->left, data, comparator);
         }
     }
-    if (node->data <= data) {
+    if (comparator(node->data, data) > 0) {
         if (!node->right) {
             node->right = node_ctor(data);
             tree->size++;
-            TREE_DUMP(tree, node->right);
             return;
         }
         else {
-            insert_elem(tree, node->right, data);
+            insert_elem(tree, node->right, data, comparator);
         }     
     }
+}
+
+int find_tree_elem(Node* node, TreeElem_t value) {
+
+    if (strcasecmp(node->data, value) == 0) {
+        return 1;
+    }
+
+    if (node->left) {
+        if (find_tree_elem(node->left, value)) {
+            return 1;
+        }
+    }
+
+    if (node->right) {
+        if (find_tree_elem(node->right, value)) {
+            return 1;
+        }
+    }
+
+    return 0;
 }

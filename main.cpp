@@ -3,12 +3,13 @@
 
 #include "tree.h"
 #include "dump.h"
+#include "akinator.h"
 
 int main() {
     
-    FILE* file = fopen("tree.txt", "r");
-    Tree* my_tree = tree_from_file(file);
-    TREE_DUMP(my_tree, my_tree->root);
+    Tree* my_tree = tree_from_file("tree.txt");
+
+    start_akinator(my_tree);
 
     create_html();
 
