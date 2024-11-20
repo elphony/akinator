@@ -7,7 +7,7 @@
 
 int main() {
     
-    Tree* my_tree = tree_from_file("tree.txt");
+    Tree* my_tree = tree_from_file("new_tree.txt");
 
     start_akinator(my_tree);
 

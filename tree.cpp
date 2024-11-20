@@ -23,7 +23,35 @@ Tree* tree_from_file(const char* name_file) {
 
     fclose(text);
 
+    TREE_DUMP(my_tree);
+
     return my_tree;
+}
+
+void tree_to_file(const char* name_file, Tree* tree) {
+    
+    FILE* text = fopen(name_file, "w");
+
+    write_node(text, tree->root);
+}
+
+void write_node(FILE* text, Node* node) {
+    if (node) {
+        fprintf(text, "{ \"%s\" ", node->data);
+        if (node->left) {
+            write_node(text, node->left);
+        }
+        else {
+            fprintf(text, "* ");
+        }
+        if (node->right) {
+            write_node(text, node->right);
+        }
+        else {
+            fprintf(text, "* ");
+        }
+        fprintf(text, "}");
+    }
 }
 
 Node* read_node(FILE* text) {
@@ -70,6 +98,7 @@ TreeElem_t read_node_data(FILE* text) {
 
     if (symbol != '"') {
         fprintf(stderr, "%s: unknown symbol %c\n", __func__, symbol);
+        return NULL;
     }
 
     TreeElem_t node_data = (TreeElem_t)calloc(1, MAX_DATA_SIZE * sizeof(TreeElem_t));
@@ -139,32 +168,23 @@ void insert_elem(Tree* tree, Node* node, TreeElem_t data, compare_func comparato
     }
 }
 
-int find_tree_elem(Node* node, TreeElem_t value, char** path, int* logic_path) {
+int find_tree_elem(Node* node, TreeElem_t value) {
 
-    *path = node->data;
-    path++;
     if (strcasecmp(node->data, value) == 0) {
         return 1;
     }
 
-    *logic_path = -1; 
-    logic_path++;
     if (node->left) {
-        if (find_tree_elem(node->left, value, path, logic_path)) {
+        if (find_tree_elem(node->left, value)) {
             return 1;
         }
     }
-    logic_path--;
 
-    *logic_path = 1; 
-    logic_path++;
     if (node->right) {
-        if (find_tree_elem(node->right, value, path, logic_path)) {
+        if (find_tree_elem(node->right, value)) {
             return 1;
         }
     }
-    logic_path--;
 
-    path--;
     return 0;
 }

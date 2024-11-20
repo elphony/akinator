@@ -1,9 +1,9 @@
 { "animal" 
-    { "teaches math" 
+    { "teaches calculs" 
         { "Shtepa" * * } 
         { "Redkozubov" * * }
     } 
-    { "teaches math" 
+    { "teaches calculs" 
         { "DED" * * } 
         { "Kalinich" * * }
     }

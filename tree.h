@@ -38,6 +38,10 @@ Tree* tree_from_file(const char* name_file);
 
 size_t count_node();
 
-int find_tree_elem(Node* node, TreeElem_t value, char** path, int* logic_path);
+int find_tree_elem(Node* node, TreeElem_t value);
+
+void tree_to_file(const char* name_file, Tree* tree);
+
+void write_node(FILE* text, Node* node);
 
 #endif // TREE_H

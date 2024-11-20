@@ -4,7 +4,7 @@
 
 #include "dump.h"
 
-void create_dump(Tree* tree, int* dump_id, const char* file, int line, const char* func) {
+void create_dump(Tree* tree, const char* file, int line, const char* func) {
     FILE* dump = fopen("dump/dump.dot", "w");
 
     fprintf(dump, "digraph tree {\n");
@@ -17,11 +17,9 @@ void create_dump(Tree* tree, int* dump_id, const char* file, int line, const cha
     fprintf(dump, "}\n");
 
     fclose(dump);
-
-    *dump_id = count_dump();
     
     char command[MAX_SIZE_OF_COMMAND] = {};
-    sprintf(command, "dot -Tpng dump/dump.dot -o dump/dump%d.png", *dump_id);
+    sprintf(command, "dot -Tpng dump/dump.dot -o dump/dump%d.png", count_dump());
     system(command);
 }
 
