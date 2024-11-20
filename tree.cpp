@@ -28,32 +28,6 @@ Tree* tree_from_file(const char* name_file) {
     return my_tree;
 }
 
-void tree_to_file(const char* name_file, Tree* tree) {
-    
-    FILE* text = fopen(name_file, "w");
-
-    write_node(text, tree->root);
-}
-
-void write_node(FILE* text, Node* node) {
-    if (node) {
-        fprintf(text, "{ \"%s\" ", node->data);
-        if (node->left) {
-            write_node(text, node->left);
-        }
-        else {
-            fprintf(text, "* ");
-        }
-        if (node->right) {
-            write_node(text, node->right);
-        }
-        else {
-            fprintf(text, "* ");
-        }
-        fprintf(text, "}");
-    }
-}
-
 Node* read_node(FILE* text) {
 
     int symbol = fgetc(text);
@@ -86,6 +60,33 @@ Node* read_node(FILE* text) {
     }
 
     return node; 
+}
+
+void tree_to_file(const char* name_file, Tree* tree) {
+    
+    FILE* text = fopen(name_file, "w");
+
+    write_node(text, tree->root);
+}
+
+void write_node(FILE* text, Node* node) {
+
+    if (node) {
+        fprintf(text, "{ \"%s\" ", node->data);
+        if (node->left) {
+            write_node(text, node->left);
+        }
+        else {
+            fprintf(text, "* ");
+        }
+        if (node->right) {
+            write_node(text, node->right);
+        }
+        else {
+            fprintf(text, "* ");
+        }
+        fprintf(text, "}");
+    }
 }
 
 TreeElem_t read_node_data(FILE* text) {

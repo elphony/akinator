@@ -5,11 +5,12 @@
 
 #include "tree.h"
 #include "akinator.h"
-#include "dump.h"                      
+#include "dump.h"
+#include "text_color.h"
 
 void start_akinator(Tree* tree) {
     
-    printf("What do you want:\n[G]uess, [D]efine, [S]how the tree, [E]xit without save progress or [W]ith saving?\n");
+    color_fprintf(stdout, COLOR_YELLOW, "What do you want:\n[G]uess, [D]efine, [S]how the tree, [E]xit without save progress or [W]ith saving?\n");
 
     char ans[MAX_SIZE_ANS] = {};
 
@@ -23,7 +24,7 @@ void start_akinator(Tree* tree) {
             if (akinator_give_defenition(tree)) {
                 printf("Do not find this object\n");
             }
-            printf("\nWhat do you want:\n[G]uess, [D]efine, [S]how the tree, [E]xit?\n");
+            color_fprintf(stdout, COLOR_YELLOW, "\nWhat do you want:\n[G]uess, [D]efine, [S]how the tree, [E]xit without save progress or [W]ith saving?\n");
         }
 
         else if (strcasecmp(ans, "s") == 0) {
@@ -33,20 +34,24 @@ void start_akinator(Tree* tree) {
 
             sprintf(command, "eog dump/dump%d.png -f", count_dump() - 1);
             system(command);
+
+           color_fprintf(stdout, COLOR_YELLOW, "\nWhat do you want:\n[G]uess, [D]efine, [S]how the tree, [E]xit without save progress or [W]ith saving?\n");
         }
 
         else if (strcasecmp(ans, "e") == 0) {
+            system("eog bye_bye.png -f");
             return;
         }
 
         else if (strcasecmp(ans, "w") == 0) {
             tree_to_file("new_tree.txt", tree);
+            printf("Bye bye\n");
             return;
         }
 
         else {
             printf("Unknown command\n");
-            printf("What do you want:\n[G]uess, [D]efine, [S]how the tree, [E]xit ?\n");
+            color_fprintf(stdout, COLOR_YELLOW, "\nWhat do you want:\n[G]uess, [D]efine, [S]how the tree, [E]xit without save progress or [W]ith saving?\n");
         }
     }
 }
@@ -108,11 +113,11 @@ void start_akinator_guess(Tree* tree) {
         } 
         else if (strcasecmp(start_game, "no") == 0) {
             printf("Okay\n");
-            printf("What do you want:\n[G]uess, [D]efine, [S]how the tree, [E]xit?\n");
+            color_fprintf(stdout, COLOR_YELLOW, "\nWhat do you want:\n[G]uess, [D]efine, [S]how the tree, [E]xit without save progress or [W]ith saving?\n");
             break;
         } 
         else {
-            printf("Please, answer only \"yes\" or \"no\")\n");
+            printf("Please, answer only \"yes\" or \"no\" :(\n");
             printf("Do you want to start the game? [yes/no]\n");
         }
     }
@@ -122,7 +127,7 @@ void play_game(Tree* tree, Node* node) {
 
     char ans[MAX_SIZE_ANS] = {};
 
-    while (node->left != NULL || node->right != NULL) {
+    while (node->left != NULL && node->right != NULL) {
 
         printf("%s? [yes/no]\n", node->data);
 
@@ -136,19 +141,15 @@ void play_game(Tree* tree, Node* node) {
             }
         }
 
-        if (strcasecmp(ans, "yes") == 0 && node->right) {
+        if (strcasecmp(ans, "yes") == 0) {
             node = node->right;
         } 
-        else if (node->left) {
-            node = node->left;
-        }
         else {
-            printf("Tree is not correct\n");
-            return;
+            node = node->left;
         }
     }
 
-    printf("I think, it is %s\n", node->data);
+    color_fprintf(stdout, COLOR_GREEN, "I think, it is %s\n", node->data);
 
     printf("Did I guess right? [yes/no]\n");
 
