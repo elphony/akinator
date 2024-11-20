@@ -2,8 +2,8 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "tree.h"
-#include "dump.h"
+#include "../include/tree.h"
+#include "../include/dump.h"
 
 size_t count_node() {
     static size_t num = 0;

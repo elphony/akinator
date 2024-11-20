@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <assert.h>
-#include "text_color.h"
+
+#include "../include/text_color.h"
 
 int color_fprintf(FILE *stream, Color code, const char* string, ...) {
     assert(stream != NULL);

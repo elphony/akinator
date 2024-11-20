@@ -3,10 +3,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include "tree.h"
-#include "akinator.h"
-#include "dump.h"
-#include "text_color.h"
+#include "../include/tree.h"
+#include "../include/akinator.h"
+#include "../include/dump.h"
+#include "../include/text_color.h"
 
 void start_akinator(Tree* tree) {
     
@@ -22,7 +22,7 @@ void start_akinator(Tree* tree) {
 
         else if (strcasecmp(ans, "d") == 0) {
             if (akinator_give_defenition(tree)) {
-                printf("Do not find this object\n");
+                printf("The object was not found\n");
             }
             color_fprintf(stdout, COLOR_YELLOW, "\nWhat do you want:\n[G]uess, [D]efine, [S]how the tree, [E]xit without save progress or [W]ith saving?\n");
         }
@@ -44,7 +44,7 @@ void start_akinator(Tree* tree) {
         }
 
         else if (strcasecmp(ans, "w") == 0) {
-            tree_to_file("new_tree.txt", tree);
+            tree_to_file("word_base/new_tree.txt", tree);
             printf("Bye bye\n");
             return;
         }

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "dump.h"
+#include "../include/dump.h"
 
 void create_dump(Tree* tree, const char* file, int line, const char* func) {
     FILE* dump = fopen("dump/dump.dot", "w");

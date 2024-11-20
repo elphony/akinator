@@ -1,0 +1,1 @@
+{ "animal" { "teaches calculs" { "teaches algosi" { "Are you shocked" { "Shtepa" * * }{ "Dashkov" * * }}{ "Troyan-Golovyan" * * }}{ "Redkozubov" * * }}{ "teaches calculs" { "Cute" { "Women" { "DED" * * }{ "Hlebnikova" * * }}{ "Poltorashka" * * }}{ "Kalinich" * * }}}
